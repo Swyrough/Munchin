@@ -18,7 +18,8 @@
                         allCustomers.append(newSpan);
                     }
                     var myTripID = trip.time;
-                    var textForm = $('<form role = "form" action = "send_sms" method = "Get">');
+                    var textForm = $('<form role = "form" action = "send_sms" method="get">');
+
                     var formInput = $('<input type = "submit" value = "Text the Customers" id = "text">');
                     var hiddenText = $('<input type = "hidden" value = myTripID id = "id">');
                     textForm.append(formInput);
