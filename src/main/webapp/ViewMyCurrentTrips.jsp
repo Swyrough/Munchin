@@ -12,7 +12,7 @@
                     var allCustomers = $('<div id = "expandable">');
                     for (var i = 0; i < numCustomers; i++) {
                         var customer = eachCustomer[i].split(" ");
-                        var customerName = customer[0] + customer[1];
+                        var customerName = customer[0] + " " + customer[1];
                         var phone = customer[2];
                         var newSpan = $('<p>').append($('<a>').html(customerName));
                         allCustomers.append(newSpan);
@@ -67,6 +67,5 @@
                 </div>
             </div>
         </div>
-
     </jsp:attribute>
 </t:template>

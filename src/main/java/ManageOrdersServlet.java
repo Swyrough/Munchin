@@ -1,17 +1,13 @@
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.PreparedQuery;
-import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.*;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import com.google.gson.Gson;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
-import com.google.appengine.api.datastore.*;
-import com.google.appengine.api.users.*;
 /**
  * Created by compsci on 2/1/15.
  */
@@ -20,6 +16,11 @@ public class ManageOrdersServlet extends HttpServlet {
     private List<Trip> myTrips = new ArrayList<Trip>();
     private static DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     public void doGet(HttpServletRequest req, HttpServletResponse resp){
+        req.setAttribute("page", "order_manager");
+        req.setAttribute("isApproved", "1");
+        req.setAttribute("log", LoginStatus.getLogOutUrl("/"));
+        myOrders = new ArrayList<Order>();
+        myTrips = new ArrayList<Trip>();
         UserService userService = UserServiceFactory.getUserService(); // Finds the user's email from OAuth
         com.google.appengine.api.users.User user = userService.getCurrentUser();
         String email = user.getEmail();
@@ -32,7 +33,7 @@ public class ManageOrdersServlet extends HttpServlet {
             System.out.println("cooking order");
             myOrders.add(new Order(order));
             try {
-                Query q1 = new Query("order");
+                Query q1 = new Query("trip");
                 Query.Filter myTrip = new Query.FilterPredicate("time",
                         Query.FilterOperator.EQUAL, order.getProperty("tripId"));
                 PreparedQuery pq1 = datastore.prepare(q1.setFilter(onlyMine));
@@ -44,6 +45,11 @@ public class ManageOrdersServlet extends HttpServlet {
             }
         }
         System.out.println("IN MANAGE Order");
+        req.setAttribute("responseJson", new Gson().toJson(myOrders));
+        System.out.println(new Gson().toJson(myOrders));
+        try {
+            req.getRequestDispatcher("ManageOrder.jsp").forward(req, resp);
+        } catch (Exception e) {e.printStackTrace();}
 
 
 
