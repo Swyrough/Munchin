@@ -29,8 +29,8 @@ public class Trip {
         this.time = Long.parseLong((String) trip.getKey().getName());
         System.out.println("the id is " + time);
         this.dropOffLocation = (String)trip.getProperty("dropOffLocation");
-        this.eta = Long.toString(Long.parseLong((String)trip.getProperty("eta")));
-        this.lastOrder = Long.toString(Long.parseLong((String)trip.getProperty("lastOrder")));
+        this.eta = Long.toString((long)trip.getProperty("eta"));
+        this.lastOrder = Long.toString((long)trip.getProperty("lastOrder"));
         this.restaurant = (String)trip.getProperty("restaurant");
         this.flat = Double.parseDouble((String)trip.getProperty("flatFee"));
         this.percentage = Double.parseDouble((String)trip.getProperty("percentFee"));
