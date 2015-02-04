@@ -61,7 +61,7 @@
                     var joinTripRow = $('<div class = "row" id = "joinRow">');
                     var bufferSpace = $('<div class = "col-sm-6">').html("    ");
                     var joinButton = $('<div class = "col-sm-6">');
-                    var myButton = $('<a class="btn btn-primary" href="order?id='+trip.time+'">').html("Join trip");
+                    var myButton = $('<a class="btn btn-primary" href="order?id='+trip.time +'">').html("Join trip");
                     joinButton.append(myButton);
                     joinTripRow.append(joinButton);
 
@@ -85,9 +85,6 @@
     <jsp:attribute name="content">
         <div class="site-wrapper-inner">
             <div class="cover-container">
-                <!--
-                thanks to : http://bootsnipp.com/snippets/featured/bootstrap-3x-contact-form-layout
-                -->
                 <div id="content" class="inner cover" style="text-align: left">
                     <div class="row">
                         <div class="col-md-12">

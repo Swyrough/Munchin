@@ -19,7 +19,11 @@ public class TripServlet extends HttpServlet {
 
     private static DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
+    /* Redirects users to the makeTrip page
+     */
+
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+
         req.setAttribute("page", "trip");
         req.setAttribute("isApproved", "1");
         req.setAttribute("log", LoginStatus.getLogInUrl("/create_profile"));
@@ -28,25 +32,28 @@ public class TripServlet extends HttpServlet {
         } catch (Exception e) { e.printStackTrace(); }
     }
 
-    @Override
+    /* Stores a trip in the datastore
+     */
+
     public void doPost(HttpServletRequest req, HttpServletResponse resp){
+
         long currentTime = new Date().getTime();
         UserService userService = UserServiceFactory.getUserService(); // Finds the user's email from OAuth
         User user = userService.getCurrentUser();
         String email = user.getEmail();
-        Entity trip = new Entity("trip", Long.toString(currentTime)); // Trips are Id'd by their timeStamp
+        Entity trip = new Entity("trip"); // Trips are Id'd by a random key
         trip.setProperty("user", email);
-        trip.setProperty("time", currentTime);
+        trip.setProperty("time", currentTime); // Time the trip was made
         trip.setProperty("dropOffLocation",req.getParameter("dropOffLocation"));
         System.out.println("maxOrder is"+req.getParameter("maxOrder"));
         System.out.println("restaurant is"+req.getParameter("restaurant"));
         trip.setProperty("restaurant", req.getParameter("restaurant"));
-        trip.setProperty("maxOrder", req.getParameter("maxOrder"));
+        trip.setProperty("maxOrder", Long.parseLong(req.getParameter("maxOrder")));
         findFee(trip, req);
         trip.setProperty("eta",getMilliTime(req,"eta"));
         trip.setProperty("lastOrder",getMilliTime(req,"lastOrder"));
         datastore.put(trip);
-        try {
+        try{
             resp.sendRedirect("/");
         }catch (Exception e){
             e.printStackTrace();
