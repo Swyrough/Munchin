@@ -5,45 +5,66 @@
 <t:template isApproved="${isApproved}" log="${log}" page="${page}">
     <jsp:attribute name="scripts">
         <script>
+            var i = 0;
+            var header = $('<h2 style = "color : #FF0000 >').html("My Orders");
+            header.appendTo('#orders');
             $(function() {
-                console.log("here");
-                $.each( ${responseJson}, function(index, order) {
-                    for( i = 0; i<order.primaryItems.length;i++){
-                        var pPrice = "$" + order.primaryMax[i].toString();
-                        var primaryRow = $('<div class = "row" id = "primaryRow">');
-                        var k = i+1;
-                        var primaryFood = $('<div>').html("Food Item #" + k + ": "+order.primaryItems[i] + " (" + pPrice + ")");
-                        primaryRow.append(primaryFood);
-                        // primary order comments exist
-                        if (order.primaryComments[i] != null && order.primaryComments[i].localeCompare("") != 0) {
-                            var comments = $('<div>').html("Comments: " + order.primaryComments[i]);
-                            primaryRow.append(comments);
+                $.each(${items}, function (index, item) {
+                    i++;
+                    var orderWrapper = $('<div class = "well well-lg">');
+                    var orderHeader = $('<div style = "font-weight:bold">').html("Order number: " + i);
+                    orderWrapper.append(orderHeader);
+                    var heading = $('<div> class = "row"'>);
+                    var headingName = $('<div> class = "col-sm-6" style = "color: #CC0000"').html("Item name");
+                    var headingMaxPrice = $('<div> class = "col-sm-6" style = "color: #CC0000"').html("Max Price");
+                    orderWrapper.append(heading);
+                    
+                    var numItems = item.length;
+                    var loopCounter;
+                    for (loopCounter = 0; loopCounter < numItems; loopCounter++) {
+                        var k = loopCounter + 1;
+                        var itemWrapper = $('<div class = "well">');
+                        var itemNumberRow = $('<div class = "row" style = "font-weight:bold">').html("Item number: " + k);
+                        
+                        var theItem = item[loopCounter];
+
+                        var itemInfoRow = $('<div class = "row">');
+                        var theFood = $('<div class = "col-sm-6">').html(theItem.foodItem);
+                        var theMax = $('<div class = "col-sm-6">').html(theItem.priceMax);
+                        
+                        itemInfoRow.append(theFood);
+                        itemInfoRow.append(theMax);
+                        itemWrapper.append(itemInfoRow);
+                        
+                        var comments = theItem.comments;
+                        if (!(comments === "")) {
+                            var commentRow = $('<div>').html(comments);
+                            itemWrapper.append(commentRow);
                         }
-                        var altRow = $('<div class = "row" id = "altRow">');
-                        if (order.altItems[i] == null) {
-                            console.log("hello" + i);
-                        }
-                        if (order.altItems[i]==order.primaryItems[i]) {
-                            console.log("yello" + i);
-                        }
-                        // alternate order exists
-                        if (order.altItems[i] != null && (!(order.altItems[i]===order.primaryItems[i]))) {
-                            console.log("hey");
-                            var altPrice = "$" + order.altMax[i].toString();
-                            var altFood = $('<div style = "color : #A0A0A1">').html("Alternate Food Item #" + k  + ": "+order.altItems[i] + " (" + altPrice + ")");
-                            altRow.append(altFood);
-                            //alternate comments exist
-                            if (order.altComments[i] != null && order.altComments[i].localeCompare("") != 0) {
-                                var comments = $('<div style = "color : #A0A0A1">').html("Comments: " + order.altComments[i]);
-                                altRow.append(comments);
+
+                        if (theItem.hasAlt == true) {
+                            var itemNumberRow = $('<div class = "row" style = "font-weight:bold">').html("Alternate Item number: " + k);
+                            var alt = theItem.alt;
+                            var altItemInfoRow = $('<div class = "row">');
+                            var altFoodItem = $('<div class = "col-sm-6">').html(alt.foodItem);
+                            var altPriceMax = $('<div class = "col-sm-6">').html(alt.priceMax);
+                            altItemInfoRow.append(altFoodItem);
+                            altItemInfoRow.append(altPriceMac);
+
+                            itemWrapper.append(altItemInfoRow);
+        
+                            var altComment = alt.comments;
+        
+                            if (!(altComment === "")) {
+                                var altCommentRow = $('<div>').html(comments);
+                                itemWrapper.append(altCommentRow);
                             }
                         }
-                        $('<div id = "toClick">').appendTo("#orders")
-                                .append(primaryRow)
-                                .append(altRow)
-                                .addClass('well well-lg')
+                        orderWrapper.append(itemWrapper);
                     }
-                });
+                    orderWrapper.appendTo('#orders');
+                }
+                
             });
         </script>
     </jsp:attribute>

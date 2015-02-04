@@ -7,7 +7,7 @@
             var theForm = $('<form class="form" role="form" action="/transaction" method="post">');
             var totalPrice = 0;
             var i = 0;
-            var heading = $('<div>'>);
+            var heading = $('<div> class = "row"'>);
             var headingName = $('<div> class = "col-sm-4" style = "color: #CC0000"').html("Item name");
             var headingMaxPrice = $('<div> class = "col-sm-4" style = "color: #CC0000"').html("Max Price");
             var headingActualPrice = $('<div> class = "col-sm-2" style = "color: #CC0000"').html("Item name");
@@ -22,8 +22,8 @@
                     var itemWrapper = $('<div class = "well">');
                     i++;
                     //row for this food item
-                    var itemNumberRow = $('<div style = "font-weight:bold">').html("Item number: " + i);
-                    var itemInfoRow = $('<div>');
+                    var itemNumberRow = $('<div class = "row" style = "font-weight:bold">').html("Item number: " + i);
+                    var itemInfoRow = $('<div class = "row">');
                     var theItem = $('<div class = "col-sm-4">').html(item.foodItem);
                     var theMax = $('<div class = "col-sm-4">').html(item.priceMax);
                     var inputHolder = $('<div class = "col-sm-2">');
@@ -47,9 +47,9 @@
                     
                     
                     if (item.hasAlt == true) {
-                        var itemNumberRow = $('<div style = "font-weight:bold">').html("Alternate Item number: " + i);
+                        var itemNumberRow = $('<div class = "row" style = "font-weight:bold">').html("Alternate Item number: " + i);
                         var alt = item.alt
-                        var altItemInfoRow = $('<div>');
+                        var altItemInfoRow = $('<div class = "row">');
                         var altFoodItem = $('<div class = "col-sm-4">').html(alt.foodItem);
                         var altPriceMax = $('<div class = "col-sm-4">').html(alt.priceMax);
                         var altInputPrice = $('<input type = "number" class = "form-control" step="0.01" min="0" class="money">');
