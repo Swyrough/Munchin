@@ -32,8 +32,12 @@ public class Trip {
         this.eta = Long.toString((long)trip.getProperty("eta"));
         this.lastOrder = Long.toString((long)trip.getProperty("lastOrder"));
         this.restaurant = (String)trip.getProperty("restaurant");
-        this.flat = Double.parseDouble((String)trip.getProperty("flatFee"));
-        this.percentage = Double.parseDouble((String)trip.getProperty("percentFee"));
+        try {
+            this.flat = Double.parseDouble((String) trip.getProperty("flatFee"));
+        }catch (Exception e){this.flat = 0;}
+        try {
+            this.percentage = Double.parseDouble((String) trip.getProperty("percentFee"));
+        } catch (Exception e){this.percentage = 0;}
         this.maxOrder = Integer.parseInt((String)trip.getProperty("maxOrder"));
         this.phoneNumber = new User((String)trip.getProperty("user")).number;
         DateToMilliseconds dateSetter = new DateToMilliseconds();

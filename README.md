@@ -1,4 +1,4 @@
-appengine-skeleton
+Munchin
 =============================
+This is a web-app for facilitating convenient food delivery.
 
-This is a generated application from the appengine-skeleton archetype.

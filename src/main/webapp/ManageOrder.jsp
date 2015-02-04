@@ -9,12 +9,12 @@
                 console.log("here");
                 $.each( ${responseJson}, function(index, order) {
                     for( i = 0; i<order.primaryItems.length;i++){
-                        var trip
                         var pPrice = "$" + order.primaryMax[i].toString();
                         var primaryRow = $('<div class = "row" id = "primaryRow">');
                         var k = i+1;
                         var primaryFood = $('<div>').html("Food Item #" + k + ": "+order.primaryItems[i] + " (" + pPrice + ")");
                         primaryRow.append(primaryFood);
+                        // primary order comments exist
                         if (order.primaryComments[i] != null && order.primaryComments[i].localeCompare("") != 0) {
                             var comments = $('<div>').html("Comments: " + order.primaryComments[i]);
                             primaryRow.append(comments);
@@ -26,11 +26,13 @@
                         if (order.altItems[i]==order.primaryItems[i]) {
                             console.log("yello" + i);
                         }
+                        // alternate order exists
                         if (order.altItems[i] != null && (!(order.altItems[i]===order.primaryItems[i]))) {
                             console.log("hey");
                             var altPrice = "$" + order.altMax[i].toString();
                             var altFood = $('<div style = "color : #A0A0A1">').html("Alternate Food Item #" + k  + ": "+order.altItems[i] + " (" + altPrice + ")");
                             altRow.append(altFood);
+                            //alternate comments exist
                             if (order.altComments[i] != null && order.altComments[i].localeCompare("") != 0) {
                                 var comments = $('<div style = "color : #A0A0A1">').html("Comments: " + order.altComments[i]);
                                 altRow.append(comments);
